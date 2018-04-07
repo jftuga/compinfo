@@ -6,7 +6,8 @@ Including user name, computer name, OS, model, serial number (service tag), CPU 
 
 ![compinfo output](compinfo/compinfo_screenshot.png) 
 
-[compinfo.exe download](bin/Release/compinfo.exe)
+[compinfo.exe download](/jftuga/compinfo/blob/master/compinfo/bin/Release/compinfo.exe)
+
 
 ____
 
