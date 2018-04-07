@@ -13,19 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-/*
- 
-computer : DESKTOP5
-users    : john
-os       : Win 10 Ent 2016 LTSB
-tag      : DGE04AA002705006483000
-uptime   : 4.01:18
-cpu      : Intel(R) Core(TM) i7-7700 CPU @ 3.60GHz
-mem      : 32.00 GB @ 2400Mhz
-IPv4     : 172.22.2.29
-
-*/
-
 namespace compinfo
 {
     /// <summary>
