@@ -2,7 +2,11 @@
 
 ## Display basic computer info
 
+Including user name, computer name, OS, model, serial number (service tag), CPU model, memory, IPv4 address and uptime
+
 ![compinfo output](compinfo/compinfo_screenshot.png) 
+
+[compinfo.exe download](bin/Release/compinfo.exe)
 
 ____
 
