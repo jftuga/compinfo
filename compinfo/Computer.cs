@@ -185,9 +185,30 @@ namespace compinfo
                 {
                     foreach (ManagementObject obj in win32Proc.Get())
                     {
-                        cpu = obj["Name"].ToString();
-                        physical = obj["NumberofCores"].ToString();
-                        logical = obj["NumberOfLogicalProcessors"].ToString();
+                        try
+                        {
+                            cpu = obj["Name"].ToString();
+                        }
+                        catch
+                        {
+                            cpu = NA;
+                        }
+                        try
+                        {
+                            physical = obj["NumberofCores"].ToString();
+                        }
+                        catch
+                        {
+                            physical = NA;
+                        }
+                        try
+                        {
+                            logical = obj["NumberOfLogicalProcessors"].ToString();
+                        }
+                        catch
+                        {
+                            logical = NA;
+                        }
                         break;
                     }
                 }
