@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:compinfo"
         mc:Ignorable="d"
-        Title="compinfo" Height="330" Width="660" MinHeight="330" MaxHeight="330" MinWidth="395" MaxWidth="800">
+        Title="compinfo" Height="360" Width="740" MinHeight="360" MaxHeight="360" MinWidth="395" MaxWidth="800">
     
     <Grid Name="CompInfoGrid" FocusManager.FocusedElement="{Binding ElementName=Button_Close}">
         <Grid.Resources>
@@ -20,6 +20,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
@@ -44,11 +45,11 @@
         <Label   Grid.Column="0" Grid.Row="3" Content="OS:" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="3" x:Name="TextBox_OS" TextWrapping="NoWrap" Text="{Binding Path=displayOS}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="4" Content="Serial [Manufacturer]:" HorizontalAlignment="Right" Width="124" />
-        <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_Serial" TextWrapping="NoWrap" Text="{Binding Path=displaySerial}" Margin="0,4,20,0"/>
+        <Label   Grid.Column="0" Grid.Row="4" Content="Model:" HorizontalAlignment="Right" Width="124" />
+        <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_Model" TextWrapping="NoWrap" Text="{Binding Path=displayModel}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="5" Content="Uptime (d.H:M):" HorizontalAlignment="Right" Width="124" />
-        <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Uptime" TextWrapping="NoWrap" Text="{Binding Path=displayUptime}" Margin="0,4,20,0"/>
+        <Label   Grid.Column="0" Grid.Row="5" Content="Serial [BIOS]:" HorizontalAlignment="Right" Width="124" />
+        <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Serial" TextWrapping="NoWrap" Text="{Binding Path=displaySerial}" Margin="0,4,20,0"/>
 
         <Label   Grid.Column="0" Grid.Row="6" Content="CPU [# of cores]:" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="6" x:Name="TextBox_CPU" TextWrapping="NoWrap" Text="{Binding Path=displayCPU}" Margin="0,4,20,0"/>
@@ -59,6 +60,9 @@
         <Label   Grid.Column="0" Grid.Row="8" Content="IPv4 [MAC]:" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_IPV4" TextWrapping="NoWrap" Text="{Binding Path=displayIPv4}" Margin="0,4,20,0"/>
 
-        <Button  Grid.Column="1" Grid.Row="9" x:Name="Button_Close" Content="Close"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
+        <Label   Grid.Column="0" Grid.Row="9" Content="Uptime (d.H:M):" HorizontalAlignment="Right" Width="124" />
+        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_Uptime" TextWrapping="NoWrap" Text="{Binding Path=displayUptime}" Margin="0,4,20,0"/>
+
+        <Button  Grid.Column="1" Grid.Row="10" x:Name="Button_Close" Content="Close"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
 </Window>

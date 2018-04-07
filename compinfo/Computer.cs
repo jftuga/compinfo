@@ -11,6 +11,8 @@ namespace compinfo
         [System.Runtime.InteropServices.DllImport("kernel32")]
         extern static UInt64 GetTickCount64();
 
+        private static string NA = "N/A";
+
         // helper methods
 
         private static string Truncate(string value, int maxLength)
@@ -76,6 +78,41 @@ namespace compinfo
             }
         }
 
+        public string GetModel
+        {
+            get
+            {
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Manufacturer, Model from Win32_ComputerSystem");
+                string Manufacturer = "";
+                string Model = "";
+
+                foreach (ManagementObject obj in searcher.Get())
+                {
+                    try
+                    {
+                        Manufacturer = obj.Properties["Manufacturer"].Value.ToString().Trim();
+                    }
+                    catch
+                    {
+                        Manufacturer = NA;
+                    }
+                    try
+                    {
+                        Model = obj.Properties["Model"].Value.ToString().Trim();
+                    }
+                    catch
+                    {
+                        // do nothing
+                    }
+
+                    break;
+                }
+
+                string spc = (Model.Length > 0) ? " " : "";
+                return String.Format("{0}{1}{2}", Manufacturer, spc, Model);
+            }
+        }
+
         public string GetUptime
         {
             get
@@ -97,38 +134,43 @@ namespace compinfo
         {
             get
             {
-                SelectQuery selectQuery = new SelectQuery("Win32_Bios");
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher(selectQuery);
-                string tag = "";
-                string man = "";
-                string mod = "";
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select SerialNumber, Caption, Description from Win32_BIOS");
+                string SerialNumber = "";
+                string Caption = "";
+                string Description = "";
+                
                 foreach (ManagementObject obj in searcher.Get())
                 {
-                    tag = obj.Properties["Serialnumber"].Value.ToString().Trim();
                     try
                     {
-                        man += obj.Properties["Manufacturer"].Value.ToString().Trim();
+                        SerialNumber = obj.Properties["Serialnumber"].Value.ToString().Trim();
                     }
                     catch
                     {
-                        man += "";
+                        SerialNumber = NA;
                     }
                     try
                     {
-                        mod += obj.Properties["Model"].Value.ToString().Trim();
+                        Caption = obj.Properties["Caption"].Value.ToString().Trim();
                     }
                     catch
                     {
-                        mod += "";
+                        // do nothing
                     }
-                    if (tag.Length > 3)
+                    try
                     {
-                        break;
+                        Description += obj.Properties["Description"].Value.ToString().Trim();
                     }
+                    catch
+                    {
+                        // do nothing
+                    }
+                    break;
                 }
 
-                string spc = (mod.Length > 0) ? " " : "";
-                return String.Format("{0} [{1}{2}{3}]", tag, man, spc, mod);
+                string Details = (Caption.Length >= Description.Length) ? Caption : Description;
+                string spc = (Details.Length > 0) ? " " : "";
+                return String.Format("{0} [{1}{2}]", SerialNumber, spc, Details);
             }
         }
 

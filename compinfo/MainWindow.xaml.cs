@@ -23,6 +23,7 @@ namespace compinfo
         public static string displayUserName { get; set; }
         public static string displayComputerName { get; set; }
         public static string displayOS { get; set; }
+        public static string displayModel { get; set; }
         public static string displaySerial { get; set; }
         public static string displayUptime { get; set; }
         public static string displayCPU { get; set; }
@@ -43,9 +44,10 @@ namespace compinfo
             displayUserName = c.GetUserName;
             displayComputerName = c.GetComputerName;
             displayOS = c.GetOS;
+            displayModel = c.GetModel;
             displaySerial = c.GetSerial;
             displayUptime = c.GetUptime;
-            displayCPU = c.GetCPU; // this is slow
+            displayCPU = c.GetCPU;
             displayMemory = c.GetMemory;
             displayIPv4 = c.GetIPv4;
         }
