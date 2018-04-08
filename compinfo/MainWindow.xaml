@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:compinfo"
         mc:Ignorable="d"
-        Title="compinfo" Height="360" Width="740" MinHeight="360" MaxHeight="360" MinWidth="395">
+        Title="compinfo" Height="390" Width="750" MinHeight="390" MaxHeight="390" MinWidth="395">
     
     <Grid Name="CompInfoGrid" FocusManager.FocusedElement="{Binding ElementName=Button_Close}">
         <Grid.Resources>
@@ -20,6 +20,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
@@ -57,12 +58,15 @@
         <Label   Grid.Column="0" Grid.Row="7" Content="Memory [Speed]:" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="7" x:Name="TextBox_Memory" TextWrapping="NoWrap" Text="{Binding Path=displayMemory, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="8" Content="IPv4 [MAC]:" HorizontalAlignment="Right" Width="124" />
-        <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_IPV4" TextWrapping="NoWrap" Text="{Binding Path=displayIPv4, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
+        <Label   Grid.Column="0" Grid.Row="8" Content="Graphics:" HorizontalAlignment="Right" Width="124" />
+        <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" TextWrapping="NoWrap" Text="{Binding Path=displayGraphics, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="9" Content="Uptime (d.H:M):" HorizontalAlignment="Right" Width="124" />
-        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_Uptime" TextWrapping="NoWrap" Text="{Binding Path=displayUptime, Mode=OneWay}" Margin="0,4,20,0"/>
+        <Label   Grid.Column="0" Grid.Row="9" Content="IPv4 [MAC]:" HorizontalAlignment="Right" Width="124" />
+        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_IPV4" TextWrapping="NoWrap" Text="{Binding Path=displayIPv4, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Button  Grid.Column="1" Grid.Row="10" x:Name="Button_Close" Content="Close"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
+        <Label   Grid.Column="0" Grid.Row="10" Content="Uptime (d.H:M):" HorizontalAlignment="Right" Width="124" />
+        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_Uptime" TextWrapping="NoWrap" Text="{Binding Path=displayUptime, Mode=OneWay}" Margin="0,4,20,0"/>
+
+        <Button  Grid.Column="1" Grid.Row="11" x:Name="Button_Close" Content="Close"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
 </Window>

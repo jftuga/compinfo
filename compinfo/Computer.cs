@@ -168,6 +168,24 @@ namespace compinfo
             }
         }
 
+        public string GetGraphics
+        {
+            get
+            {
+                List<string> adapter_list = new List<string>();
+
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT Name FROM Win32_VideoController"))
+                {
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        adapter_list.Add(getPropertyValueFromManObject(obj, "Name"));
+                    }
+                }
+
+                return String.Join(", ", adapter_list);
+            }
+        }
+
         public string GetIPv4
         {
             get
@@ -200,7 +218,7 @@ namespace compinfo
                         }
                     }
                 }
-                return String.Join(" ", ip_list);
+                return String.Join(", ", ip_list);
             }
         }
 

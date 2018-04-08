@@ -28,6 +28,7 @@ namespace compinfo
         public string displayUptime => c.GetUptime;
         public string displayCPU => c.GetCPU;
         public string displayMemory => c.GetMemory;
+        public string displayGraphics => c.GetGraphics;
         public string displayIPv4 => c.GetIPv4;
 
         private Computer c = new Computer();
