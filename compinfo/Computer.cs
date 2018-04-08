@@ -3,6 +3,7 @@ using System.Net.NetworkInformation;
 using System.Management;
 using System.Collections.Generic;
 using Microsoft.Win32;
+using System.Linq;
 
 namespace compinfo 
 {
@@ -20,7 +21,7 @@ namespace compinfo
 
         // helper methods
 
-        private static string Truncate(string value, int maxLength)
+        private static string truncate(string value, int maxLength)
         {
             if (string.IsNullOrEmpty(value)) return value;
             return value.Length <= maxLength ? value : value.Substring(0, maxLength);
@@ -54,10 +55,27 @@ namespace compinfo
             return newMac.ToLower().Substring(0, 17);
         }
 
+        private static string getPropertyValueFromManObject(ManagementObject obj, string propertyName, string noResult = "")
+        {
+            var prop = obj.Properties.Cast<PropertyData>().Where(x => x.Name == propertyName).FirstOrDefault();
+            if (prop == null)
+            {
+                return NA;
+            }
 
-        //
+            string propStr = prop.Value.ToString().Trim();
+            return (propStr.Length > 0) ? propStr : noResult;
+        }
+
+        private static string getPropertyValueFromSearcher(ManagementObjectSearcher searcher, string propertyName, string noResult = "")
+        {
+            ManagementObjectCollection queryCollection = searcher.Get();
+            ManagementObject obj = queryCollection.OfType<ManagementObject>().FirstOrDefault();
+
+            return getPropertyValueFromManObject(obj, propertyName, noResult);
+        }
+
         // external methods
-        //
 
         public string GetUserName
         {
@@ -88,33 +106,101 @@ namespace compinfo
             get
             {
                 ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Manufacturer, Model from Win32_ComputerSystem");
-                string Manufacturer = "";
-                string Model = "";
+                string Manufacturer = getPropertyValueFromSearcher(searcher, "Manufacturer");
+                string Model = getPropertyValueFromSearcher(searcher, "Model");
 
-                foreach (ManagementObject obj in searcher.Get())
+                return (String.Format("{0} {1}", Manufacturer, Model)).Trim();
+            }
+        }
+
+        public string GetSerial
+        {
+            get
+            {
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select SerialNumber, Caption, Description from Win32_BIOS");
+                string SerialNumber = getPropertyValueFromSearcher(searcher, "SerialNumber");
+                string Caption = getPropertyValueFromSearcher(searcher, "Caption");
+                string Description = getPropertyValueFromSearcher(searcher, "Description");
+
+                string Details = (Caption.Length >= Description.Length) ? Caption : Description;
+                return (Details.Length > 0) ? String.Format("{0} [{1}]", SerialNumber, Details) : SerialNumber;
+            }
+        }
+
+        public string GetCPU
+        {
+            get
+            {
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name, NumberOfCores, NumberOfLogicalProcessors from Win32_Processor where DeviceID='CPU0'");
+                string Name = getPropertyValueFromSearcher(searcher, "Name");
+                string NumberOfCores = getPropertyValueFromSearcher(searcher, "NumberOfCores", NA);
+                string NumberOfLogicalProcessors = getPropertyValueFromSearcher(searcher, "NumberOfLogicalProcessors", NA);
+
+                return String.Format("{0} [{1} cores, {2} logical processors]", Name, NumberOfCores, NumberOfLogicalProcessors);
+            }
+        }
+
+        public string GetMemory
+        {
+            get
+            {
+                string Capacity = "";
+                string Speed = "";
+                long totalSize = 0;
+                long totalSizeGB = 0;
+
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Capacity, Speed from Win32_PhysicalMemory"))
                 {
-                    try
+                    foreach (ManagementObject obj in searcher.Get())
                     {
-                        Manufacturer = obj.Properties["Manufacturer"].Value.ToString().Trim();
-                    }
-                    catch
-                    {
-                        Manufacturer = NA;
-                    }
-                    try
-                    {
-                        Model = obj.Properties["Model"].Value.ToString().Trim();
-                    }
-                    catch
-                    {
-                        // do nothing
-                    }
+                        Capacity = getPropertyValueFromManObject(obj, "Capacity");
+                        totalSize += Convert.ToInt64(Capacity);
 
-                    break;
+                        if (0 == Speed.Length)
+                        {
+                            Speed = getPropertyValueFromManObject(obj, "Speed") + " MHz";
+                        }
+                    }
                 }
 
-                string spc = (Model.Length > 0) ? " " : "";
-                return String.Format("{0}{1}{2}", Manufacturer, spc, Model);
+                totalSizeGB = (totalSize) / 1073741824; // 1024**3 (1 GB)
+                return String.Format("{0:0.00} GB [{1}]", totalSizeGB, Speed);
+            }
+        }
+
+        public string GetIPv4
+        {
+            get
+            {
+                List<string> ip_list = new List<string>();
+                String currentAddress = "";
+                foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
+                {
+                    if ((netInterface.NetworkInterfaceType.ToString() != "Wireless80211" && netInterface.NetworkInterfaceType.ToString() != "Ethernet") || netInterface.OperationalStatus.ToString() == "Down")
+                    {
+                        continue;
+                    }
+
+                    IPInterfaceProperties ipProps = netInterface.GetIPProperties();
+                    foreach (UnicastIPAddressInformation addr in ipProps.UnicastAddresses)
+                    {
+                        currentAddress = addr.Address.ToString();
+                        if (!currentAddress.Contains(":"))
+                        {
+                            if (currentAddress.StartsWith("169.254."))
+                            {
+                                continue;
+                            }
+
+                            if (!ip_list.Contains(currentAddress))
+                            {
+                                string macAddress = netInterface.GetPhysicalAddress().ToString();
+                                ip_list.Add(String.Format("{0} [{1}]", currentAddress, addColons(macAddress)));
+                            }
+                        }
+                    }
+                }
+                return String.Join(" ", ip_list);
             }
         }
 
@@ -129,172 +215,9 @@ namespace compinfo
                 string uptime = t2.ToString();
                 if (uptime.EndsWith(":00"))
                 {
-                    uptime = Truncate(uptime, uptime.Length - 3);
+                    uptime = truncate(uptime, uptime.Length - 3);
                 }
                 return uptime;
-            }
-        }
-
-        public string GetSerial
-        {
-            get
-            {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select SerialNumber, Caption, Description from Win32_BIOS");
-                string SerialNumber = "";
-                string Caption = "";
-                string Description = "";
-                
-                foreach (ManagementObject obj in searcher.Get())
-                {
-                    try
-                    {
-                        SerialNumber = obj.Properties["Serialnumber"].Value.ToString().Trim();
-                    }
-                    catch
-                    {
-                        SerialNumber = NA;
-                    }
-                    try
-                    {
-                        Caption = obj.Properties["Caption"].Value.ToString().Trim();
-                    }
-                    catch
-                    {
-                        // do nothing
-                    }
-                    try
-                    {
-                        Description += obj.Properties["Description"].Value.ToString().Trim();
-                    }
-                    catch
-                    {
-                        // do nothing
-                    }
-                    break;
-                }
-
-                string Details = (Caption.Length >= Description.Length) ? Caption : Description;
-                string spc = (Details.Length > 0) ? " " : "";
-                return String.Format("{0} [{1}{2}]", SerialNumber, spc, Details);
-            }
-        }
-
-        public string GetCPU
-        {
-            get
-            {
-                String cpu = "";
-                String physical = "";
-                String logical = "";
-                using (ManagementObjectSearcher win32Proc = new ManagementObjectSearcher("select Name, NumberOfCores,NumberOfLogicalProcessors from Win32_Processor where DeviceID='CPU0'"))
-                {
-                    foreach (ManagementObject obj in win32Proc.Get())
-                    {
-                        try
-                        {
-                            cpu = obj["Name"].ToString();
-                        }
-                        catch
-                        {
-                            cpu = NA;
-                        }
-                        try
-                        {
-                            physical = obj["NumberofCores"].ToString();
-                        }
-                        catch
-                        {
-                            physical = NA;
-                        }
-                        try
-                        {
-                            logical = obj["NumberOfLogicalProcessors"].ToString();
-                        }
-                        catch
-                        {
-                            logical = NA;
-                        }
-                        break;
-                    }
-                }
-
-                return String.Format("{0} [{1} cores, {2} logical processors]", cpu, physical, logical);
-            }
-        }
-
-        public string GetMemory
-        {
-            get
-            {
-                String capacity = "";
-                String speed = "";
-                String left_brack = "[";
-                String right_brack = "]";
-                long total_sz = 0;
-                double total_gb = 0;
-                using (ManagementObjectSearcher win32Proc = new ManagementObjectSearcher("select Capacity,Speed from Win32_PhysicalMemory"))
-                {
-                    foreach (ManagementObject obj in win32Proc.Get())
-                    {
-                        capacity = obj["Capacity"].ToString();
-                        long sz = Convert.ToInt64(capacity);
-                        total_sz += sz;
-
-                        // VMware VMs do not have Speed defined
-                        try
-                        {
-                            if (0 == speed.Length)
-                            {
-                                speed = obj["Speed"].ToString();
-                                speed += "Mhz";
-                            }
-                        }
-                        catch (System.NullReferenceException)
-                        {
-                            left_brack = "[";
-                            right_brack = "]";
-                            speed = "";
-                        }
-                    }
-                    total_gb = (total_sz) / 1073741824; //1024**3
-                }
-                return String.Format("{0:0.00} GB {1} {2} {3}", total_gb, left_brack, speed, right_brack);
-            }
-        }
-
-        public string GetIPv4
-        {
-            get
-            {
-                List<string> ip_list = new List<string>();
-                foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    if ((netInterface.NetworkInterfaceType.ToString() != "Wireless80211" && netInterface.NetworkInterfaceType.ToString() != "Ethernet") || netInterface.OperationalStatus.ToString() == "Down")
-                    {
-                        continue;
-                    }
-
-                    IPInterfaceProperties ipProps = netInterface.GetIPProperties();
-                    foreach (UnicastIPAddressInformation addr in ipProps.UnicastAddresses)
-                    {
-                        String currentAddress = addr.Address.ToString();
-                        if (!currentAddress.Contains(":"))
-                        {
-                            if (currentAddress.StartsWith("169.254."))
-                            {
-                                continue;
-                            }
-
-                            if (!ip_list.Contains(currentAddress))
-                            {
-                                string macAddress = netInterface.GetPhysicalAddress().ToString();
-                                ip_list.Add(String.Format("{0} [{1}]", currentAddress, addColons(macAddress)));
-                                //ip_list.Add(currentAddress);
-                            }
-                        }
-                    }
-                }
-                return String.Join(" ", ip_list);
             }
         }
     }
