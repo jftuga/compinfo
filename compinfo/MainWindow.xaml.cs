@@ -20,36 +20,22 @@ namespace compinfo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static string displayUserName { get; set; }
-        public static string displayComputerName { get; set; }
-        public static string displayOS { get; set; }
-        public static string displayModel { get; set; }
-        public static string displaySerial { get; set; }
-        public static string displayUptime { get; set; }
-        public static string displayCPU { get; set; }
-        public static string displayMemory { get; set; }
-        public static string displayIPv4 { get; set; }
+        public string displayUserName => c.GetUserName;
+        public string displayComputerName => c.GetComputerName;
+        public string displayOS => c.GetOS;
+        public string displayModel => c.GetModel;
+        public string displaySerial => c.GetSerial;
+        public string displayUptime => c.GetUptime;
+        public string displayCPU => c.GetCPU;
+        public string displayMemory => c.GetMemory;
+        public string displayIPv4 => c.GetIPv4;
+
+        private Computer c = new Computer();
 
         public MainWindow()
         {
             InitializeComponent();
             CompInfoGrid.DataContext = this;
-            ShowCompInfo();
-        }
-
-        public void ShowCompInfo()
-        {
-            var c = new Computer();
-
-            displayUserName = c.GetUserName;
-            displayComputerName = c.GetComputerName;
-            displayOS = c.GetOS;
-            displayModel = c.GetModel;
-            displaySerial = c.GetSerial;
-            displayUptime = c.GetUptime;
-            displayCPU = c.GetCPU;
-            displayMemory = c.GetMemory;
-            displayIPv4 = c.GetIPv4;
         }
 
         private void Click_Close(object sender, RoutedEventArgs e)

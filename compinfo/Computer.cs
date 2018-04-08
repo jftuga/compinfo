@@ -11,7 +11,12 @@ namespace compinfo
         [System.Runtime.InteropServices.DllImport("kernel32")]
         extern static UInt64 GetTickCount64();
 
-        private static string NA = "N/A";
+        private static string NA;
+
+        public Computer()
+        {
+            NA = "N/A";
+        }
 
         // helper methods
 
@@ -49,7 +54,7 @@ namespace compinfo
             return newMac.ToLower().Substring(0, 17);
         }
 
-        
+
         //
         // external methods
         //
@@ -212,6 +217,7 @@ namespace compinfo
                         break;
                     }
                 }
+
                 return String.Format("{0} [{1} cores, {2} logical processors]", cpu, physical, logical);
             }
         }
