@@ -40,7 +40,7 @@ namespace compinfo
 
         private void Click_Close(object sender, RoutedEventArgs e)
         {
-            Application.Current.MainWindow.Close();
+            Close();
         }
     }
 }
