@@ -131,12 +131,27 @@ namespace compinfo
         {
             get
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name, NumberOfCores, NumberOfLogicalProcessors from Win32_Processor where DeviceID='CPU0'");
-                string Name = getPropertyValueFromSearcher(searcher, "Name");
-                string NumberOfCores = getPropertyValueFromSearcher(searcher, "NumberOfCores", NA);
-                string NumberOfLogicalProcessors = getPropertyValueFromSearcher(searcher, "NumberOfLogicalProcessors", NA);
+                string Name = "";
+                string NumberOfCores = "";
+                string NumberOfLogicalProcessors = "";
+                long NumberOfCoresLong = 0;
+                long NumberOfLogicalProcessorsLong = 0;
 
-                return String.Format("{0} [{1} cores, {2} logical processors]", Name, NumberOfCores, NumberOfLogicalProcessors);
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name, NumberOfCores, NumberOfLogicalProcessors from Win32_Processor"))
+                {
+                    if( 0 == Name.Length )
+                    {
+                        Name = getPropertyValueFromSearcher(searcher, "Name");
+                    }
+
+                    NumberOfCores = getPropertyValueFromSearcher(searcher, "NumberOfCores", NA);
+                    NumberOfCoresLong += Convert.ToInt64(NumberOfCores);
+
+                    NumberOfLogicalProcessors = getPropertyValueFromSearcher(searcher, "NumberOfLogicalProcessors", NA);
+                    NumberOfLogicalProcessorsLong += Convert.ToInt64(NumberOfLogicalProcessors);
+                }
+
+                return String.Format("{0} [{1} cores, {2} logical processors]", Name, NumberOfCoresLong, NumberOfLogicalProcessorsLong);
             }
         }
 
