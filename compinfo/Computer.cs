@@ -156,9 +156,16 @@ namespace compinfo
                         Capacity = getPropertyValueFromManObject(obj, "Capacity");
                         totalSize += Convert.ToInt64(Capacity);
 
-                        if (0 == Speed.Length)
+                        try
                         {
-                            Speed = getPropertyValueFromManObject(obj, "Speed") + " MHz";
+                            if (0 == Speed.Length)
+                            {
+                                Speed = getPropertyValueFromManObject(obj, "Speed") + " MHz";
+                            }
+                        } catch
+                        {
+                            // VMWare VMs do not have Speed defined
+                            Speed = NA;
                         }
                     }
                 }
