@@ -12,3 +12,5 @@ Including user name, computer name, OS, model, serial number (service tag), CPU 
 ____
 
 Icon source: http://www.iconarchive.com/show/origami-colored-pencil-icons-by-double-j-design/red-laptop-icon.html
+
+In-depth code discussion: https://www.reddit.com/r/csharp/comments/8akwlm/please_critique_my_small_project_it_displays/
