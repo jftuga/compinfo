@@ -139,16 +139,19 @@ namespace compinfo
 
                 using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Name, NumberOfCores, NumberOfLogicalProcessors from Win32_Processor"))
                 {
-                    if( 0 == Name.Length )
+                    foreach (ManagementObject obj in searcher.Get())
                     {
-                        Name = getPropertyValueFromSearcher(searcher, "Name");
+                        if (0 == Name.Length)
+                        {
+                            Name = getPropertyValueFromSearcher(searcher, "Name");
+                        }
+
+                        NumberOfCores = getPropertyValueFromSearcher(searcher, "NumberOfCores", NA);
+                        NumberOfCoresLong += Convert.ToInt64(NumberOfCores);
+
+                        NumberOfLogicalProcessors = getPropertyValueFromSearcher(searcher, "NumberOfLogicalProcessors", NA);
+                        NumberOfLogicalProcessorsLong += Convert.ToInt64(NumberOfLogicalProcessors);
                     }
-
-                    NumberOfCores = getPropertyValueFromSearcher(searcher, "NumberOfCores", NA);
-                    NumberOfCoresLong += Convert.ToInt64(NumberOfCores);
-
-                    NumberOfLogicalProcessors = getPropertyValueFromSearcher(searcher, "NumberOfLogicalProcessors", NA);
-                    NumberOfLogicalProcessorsLong += Convert.ToInt64(NumberOfLogicalProcessors);
                 }
 
                 return String.Format("{0} [{1} cores, {2} logical processors]", Name, NumberOfCoresLong, NumberOfLogicalProcessorsLong);
