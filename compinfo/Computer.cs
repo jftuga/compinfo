@@ -21,12 +21,6 @@ namespace compinfo
 
         // helper methods
 
-        private static string truncate(string value, int maxLength)
-        {
-            if (string.IsNullOrEmpty(value)) return value;
-            return value.Length <= maxLength ? value : value.Substring(0, maxLength);
-        }
-
         private static string HKLM_GetString(string path, string key)
         {
             try
@@ -251,16 +245,8 @@ namespace compinfo
         {
             get
             {
-                TimeSpan t1;
-                t1 = TimeSpan.FromMilliseconds(GetTickCount64());
-                TimeSpan t2;
-                t2 = new TimeSpan(t1.Ticks - (t1.Ticks % 600000000));
-                string uptime = t2.ToString();
-                if (uptime.EndsWith(":00"))
-                {
-                    uptime = truncate(uptime, uptime.Length - 3);
-                }
-                return uptime;
+                TimeSpan ts = TimeSpan.FromMilliseconds(GetTickCount64());
+                return  String.Format("{0}.{1:D2}:{2:D2}", ts.Days, ts.Hours, ts.Minutes);
             }
         }
     }
