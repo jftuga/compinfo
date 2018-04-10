@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:compinfo"
+        xmlns:properties="clr-namespace:compinfo.Properties"
         mc:Ignorable="d"
         Title="compinfo" Height="390" Width="750" MinHeight="390" MaxHeight="390" MinWidth="395">
     
@@ -34,39 +35,39 @@
         </Grid.RowDefinitions>
 
         <Border Grid.ColumnSpan="2" Grid.Row="0">
-            <Label HorizontalAlignment="Center" Content="Computer Information"  FontSize="16" FontWeight="Bold"/>
+            <Label HorizontalAlignment="Center" Content="{x:Static properties:Resources.Title}"  FontSize="16" FontWeight="Bold"/>
         </Border>
 
-        <Label   Grid.Column="0" Grid.Row="1" Content="User Name:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="1" Content="{x:Static properties:Resources.UserName}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="1" x:Name="TextBox_User" TextWrapping="NoWrap" Text="{Binding Path=GetUserName, Mode=OneWay}" Margin="0,0,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="2" Content="Computer Name:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="2" Content="{x:Static properties:Resources.ComputerName}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="2" x:Name="TextBox_ComputerName" TextWrapping="NoWrap" Text="{Binding Path=GetComputerName, Mode=OneWay}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="3" Content="OS:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="3" Content="{x:Static properties:Resources.OS}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="3" x:Name="TextBox_OS" TextWrapping="NoWrap" Text="{Binding Path=GetOS, Mode=OneWay }" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="4" Content="Model:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="4" Content="{x:Static properties:Resources.Model}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_Model" TextWrapping="NoWrap" Text="{Binding Path=GetModel, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="5" Content="Serial [BIOS]:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="5" Content="{x:Static properties:Resources.Serial}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Serial" TextWrapping="NoWrap" Text="{Binding Path=GetSerial, Mode=OneWay}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="6" Content="CPU [# of cores]:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="6" Content="{x:Static properties:Resources.CPU}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="6" x:Name="TextBox_CPU" TextWrapping="NoWrap" Text="{Binding Path=GetCPU, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="7" Content="Memory [Speed]:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="7" Content="{x:Static properties:Resources.Memory}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="7" x:Name="TextBox_Memory" TextWrapping="NoWrap" Text="{Binding Path=GetMemory, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="8" Content="Graphics:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Graphics}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" TextWrapping="NoWrap" Text="{Binding Path=GetGraphics, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="9" Content="IPv4 [MAC]:" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.IPv4}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_IPV4" TextWrapping="NoWrap" Text="{Binding Path=GetIPv4, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
 
-        <Label   Grid.Column="0" Grid.Row="10" Content="Uptime (d.H:M):" HorizontalAlignment="Right" Width="124" />
+        <Label   Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.Uptime}" HorizontalAlignment="Right" Width="124" />
         <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_Uptime" TextWrapping="NoWrap" Text="{Binding Path=GetUptime, Mode=OneWay}" Margin="0,4,20,0"/>
 
-        <Button  Grid.Column="1" Grid.Row="11" x:Name="Button_Close" Content="Close"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
+        <Button  Grid.Column="1" Grid.Row="11" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
 </Window>
