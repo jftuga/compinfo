@@ -124,7 +124,7 @@ namespace compinfo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OS.
+        ///   Looks up a localized string similar to Operating System.
         /// </summary>
         public static string OS {
             get {
