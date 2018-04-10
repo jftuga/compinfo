@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:compinfo"
         xmlns:properties="clr-namespace:compinfo.Properties"
         mc:Ignorable="d"
-        Title="compinfo" Height="390" Width="750" MinHeight="390" MaxHeight="390" MinWidth="395">
+        Title="compinfo" Height="390" Width="750">
     
     <Grid Name="CompInfoGrid" FocusManager.FocusedElement="{Binding ElementName=Button_Close}">
         <Grid.Resources>
