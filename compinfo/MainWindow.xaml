@@ -13,6 +13,16 @@
             <Style TargetType="Border" >
                 <Setter Property="Padding" Value="5,5,5,5" />
             </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="Margin" Value="0,0,3,0" />
+            </Style>
+
+            <Style TargetType="TextBox">
+                <Setter Property="TextWrapping" Value="NoWrap" />
+                <Setter Property="Margin" Value="0,4,20,0" />
+            </Style>
         </Grid.Resources>
 
         <Grid.ColumnDefinitions>
@@ -37,36 +47,36 @@
         <Border Grid.ColumnSpan="2" Grid.Row="0">
             <Label HorizontalAlignment="Center" Content="{x:Static properties:Resources.Title}"  FontSize="16" FontWeight="Bold"/>
         </Border>
+        
+        <Label Label.Target="{Binding ElementName=TextBox_User}" Grid.Column="0" Grid.Row="1" Content="{x:Static properties:Resources.UserName}" />
+        <TextBox Grid.Column="1" Grid.Row="1" x:Name="TextBox_User" Text="{Binding Path=GetUserName, Mode=OneWay}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_User}" Grid.Column="0" Grid.Row="1" Content="{x:Static properties:Resources.UserName}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="1" x:Name="TextBox_User" TextWrapping="NoWrap" Text="{Binding Path=GetUserName, Mode=OneWay}" Margin="0,0,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_ComputerName}" Grid.Column="0" Grid.Row="2" Content="{x:Static properties:Resources.ComputerName}" />
+        <TextBox Grid.Column="1" Grid.Row="2" x:Name="TextBox_ComputerName" Text="{Binding Path=GetComputerName, Mode=OneWay}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_ComputerName}" Grid.Column="0" Grid.Row="2" Content="{x:Static properties:Resources.ComputerName}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="2" x:Name="TextBox_ComputerName" TextWrapping="NoWrap" Text="{Binding Path=GetComputerName, Mode=OneWay}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_OS}"  Grid.Column="0" Grid.Row="3" Content="{x:Static properties:Resources.OS}" />
+        <TextBox Grid.Column="1" Grid.Row="3" x:Name="TextBox_OS" Text="{Binding Path=GetOS, Mode=OneWay }" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_OS}"  Grid.Column="0" Grid.Row="3" Content="{x:Static properties:Resources.OS}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="3" x:Name="TextBox_OS" TextWrapping="NoWrap" Text="{Binding Path=GetOS, Mode=OneWay }" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_Model}"  Grid.Column="0" Grid.Row="4" Content="{x:Static properties:Resources.Model}" />
+        <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_Model" Text="{Binding Path=GetModel, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Model}"  Grid.Column="0" Grid.Row="4" Content="{x:Static properties:Resources.Model}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_Model" TextWrapping="NoWrap" Text="{Binding Path=GetModel, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_Serial}"  Grid.Column="0" Grid.Row="5" Content="{x:Static properties:Resources.Serial}" />
+        <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Serial" Text="{Binding Path=GetSerial, Mode=OneWay}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Serial}"  Grid.Column="0" Grid.Row="5" Content="{x:Static properties:Resources.Serial}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Serial" TextWrapping="NoWrap" Text="{Binding Path=GetSerial, Mode=OneWay}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_CPU}"  Grid.Column="0" Grid.Row="6" Content="{x:Static properties:Resources.CPU}" />
+        <TextBox Grid.Column="1" Grid.Row="6" x:Name="TextBox_CPU" Text="{Binding Path=GetCPU, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_CPU}"  Grid.Column="0" Grid.Row="6" Content="{x:Static properties:Resources.CPU}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="6" x:Name="TextBox_CPU" TextWrapping="NoWrap" Text="{Binding Path=GetCPU, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_Memory}"  Grid.Column="0" Grid.Row="7" Content="{x:Static properties:Resources.Memory}" />
+        <TextBox Grid.Column="1" Grid.Row="7" x:Name="TextBox_Memory" Text="{Binding Path=GetMemory, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Memory}"  Grid.Column="0" Grid.Row="7" Content="{x:Static properties:Resources.Memory}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="7" x:Name="TextBox_Memory" TextWrapping="NoWrap" Text="{Binding Path=GetMemory, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_Graphics}"  Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Graphics}" />
+        <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" Text="{Binding Path=GetGraphics, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Graphics}"  Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Graphics}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" TextWrapping="NoWrap" Text="{Binding Path=GetGraphics, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.IPv4}" />
+        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_IPV4" Text="{Binding Path=GetIPv4, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.IPv4}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_IPV4" TextWrapping="NoWrap" Text="{Binding Path=GetIPv4, Mode=OneWay, IsAsync=true}" Margin="0,4,20,0"/>
-
-        <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.Uptime}" HorizontalAlignment="Right" Margin="0,0,3,0" />
-        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_Uptime" TextWrapping="NoWrap" Text="{Binding Path=GetUptime, Mode=OneWay}" Margin="0,4,20,0"/>
+        <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.Uptime}" />
+        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_Uptime" Text="{Binding Path=GetUptime, Mode=OneWay}" />
 
         <Button  Grid.Column="1" Grid.Row="11" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
