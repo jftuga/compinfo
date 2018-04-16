@@ -9,7 +9,7 @@ namespace compinfo
     class NativeMethods
     {
         [System.Runtime.InteropServices.DllImport("kernel32")]
-        extern static UInt64 GetTickCount64();
+        extern static uint GetTickCount64();
 
         public static string Uptime() {
             TimeSpan ts = TimeSpan.FromMilliseconds(GetTickCount64());

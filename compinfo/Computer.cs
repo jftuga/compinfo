@@ -10,9 +10,6 @@ namespace compinfo
 {
     class Computer
     {
-        [System.Runtime.InteropServices.DllImport("kernel32")]
-        extern static UInt64 GetTickCount64();
-
         private static string NA;
 
         public Computer()
