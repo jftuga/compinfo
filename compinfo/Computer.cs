@@ -4,6 +4,7 @@ using System.Management;
 using System.Collections.Generic;
 using Microsoft.Win32;
 using System.Linq;
+using System.Diagnostics;
 
 namespace compinfo 
 {
@@ -21,7 +22,7 @@ namespace compinfo
 
         // helper methods
 
-        private static string HKLM_GetString(string path, string key)
+        private static string HKLM_GetString2(string path, string key)
         {
             try
             {
@@ -34,6 +35,30 @@ namespace compinfo
             {
                 return NA;
             }
+        }
+
+        private static string HKLM_GetString(string path, string key)
+        {
+            RegistryKey registryKey = null;
+            try
+            {
+                registryKey = Registry.LocalMachine.OpenSubKey(path, false);
+                if (registryKey == null)
+                {
+                    return NA;
+                }
+                if (registryKey.GetValueKind(key) != RegistryValueKind.String)
+                {
+                    return NA;
+                }
+                return (string)registryKey.GetValue(key);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
+            return NA;
         }
 
         private static string addColons(string mac)
