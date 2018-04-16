@@ -80,10 +80,11 @@ namespace compinfo
 
         private static string getPropertyValueFromSearcher(ManagementObjectSearcher searcher, string propertyName, string noResult = "")
         {
-            ManagementObjectCollection queryCollection = searcher.Get();
-            ManagementObject obj = queryCollection.OfType<ManagementObject>().FirstOrDefault();
-
-            return getPropertyValueFromManObject(obj, propertyName, noResult);
+            using (ManagementObjectCollection queryCollection = searcher.Get())
+            {
+                ManagementObject obj = queryCollection.OfType<ManagementObject>().FirstOrDefault();
+                return getPropertyValueFromManObject(obj, propertyName, noResult);
+            }
         }
 
         // external methods
@@ -116,11 +117,13 @@ namespace compinfo
         {
             get
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Manufacturer, Model from Win32_ComputerSystem");
-                string Manufacturer = getPropertyValueFromSearcher(searcher, "Manufacturer");
-                string Model = getPropertyValueFromSearcher(searcher, "Model");
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Manufacturer, Model from Win32_ComputerSystem"))
+                {
+                    string Manufacturer = getPropertyValueFromSearcher(searcher, "Manufacturer");
+                    string Model = getPropertyValueFromSearcher(searcher, "Model");
 
-                return (String.Format("{0} {1}", Manufacturer, Model)).Trim();
+                    return (String.Format("{0} {1}", Manufacturer, Model)).Trim();
+                }
             }
         }
 
@@ -128,13 +131,15 @@ namespace compinfo
         {
             get
             {
-                ManagementObjectSearcher searcher = new ManagementObjectSearcher("select SerialNumber, Caption, Description from Win32_BIOS");
-                string SerialNumber = getPropertyValueFromSearcher(searcher, "SerialNumber");
-                string Caption = getPropertyValueFromSearcher(searcher, "Caption");
-                string Description = getPropertyValueFromSearcher(searcher, "Description");
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select SerialNumber, Caption, Description from Win32_BIOS"))
+                {
+                    string SerialNumber = getPropertyValueFromSearcher(searcher, "SerialNumber");
+                    string Caption = getPropertyValueFromSearcher(searcher, "Caption");
+                    string Description = getPropertyValueFromSearcher(searcher, "Description");
 
-                string Details = (Caption.Length >= Description.Length) ? Caption : Description;
-                return (Details.Length > 0) ? String.Format("{0} [{1}]", SerialNumber, Details) : SerialNumber;
+                    string Details = (Caption.Length >= Description.Length) ? Caption : Description;
+                    return (Details.Length > 0) ? String.Format("{0} [{1}]", SerialNumber, Details) : SerialNumber;
+                }
             }
         }
 
