@@ -25,9 +25,10 @@ namespace compinfo
         {
             try
             {
-                RegistryKey rk = Registry.LocalMachine.OpenSubKey(path);
-                if (rk == null) return "";
-                return (string)rk.GetValue(key);
+                using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
+                {
+                    return (rk == null) ? "" : (string)rk.GetValue(key);
+                }
             }
             catch
             {
@@ -39,14 +40,7 @@ namespace compinfo
 
         private static string addColons(string mac)
         {
-            string newMac = "";
-            int i;
-            for (i = 0; i < 12; i += 2)
-            {
-                newMac += mac.Substring(i, 2) + ":";
-            }
-
-            return newMac.ToLower().Substring(0, 17);
+            return (String.Format("{0}:{1}:{2}:{3}:{4}:{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2), mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2))).ToLower();
         }
 
         private static string getPropertyValueFromManObject(ManagementObject obj, string propertyName, string noResult = "")
@@ -245,8 +239,7 @@ namespace compinfo
         {
             get
             {
-                TimeSpan ts = TimeSpan.FromMilliseconds(GetTickCount64());
-                return  String.Format("{0}.{1:D2}:{2:D2}", ts.Days, ts.Hours, ts.Minutes);
+                return NativeMethods.GetUptime();
             }
         }
     }
