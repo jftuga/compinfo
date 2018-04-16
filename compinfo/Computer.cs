@@ -88,7 +88,7 @@ namespace compinfo
 
         // external methods
 
-        public string GetUserName
+        public string UserName
         {
             get
             {
@@ -96,7 +96,7 @@ namespace compinfo
             }
         }
 
-        public string GetComputerName
+        public string ComputerName
         {
             get
             {
@@ -104,7 +104,7 @@ namespace compinfo
             }
         }
 
-        public string GetOS
+        public string OS
         {
             get
             {
@@ -112,7 +112,7 @@ namespace compinfo
             }
         }
 
-        public string GetModel
+        public string Model
         {
             get
             {
@@ -124,7 +124,7 @@ namespace compinfo
             }
         }
 
-        public string GetSerial
+        public string Serial
         {
             get
             {
@@ -138,7 +138,7 @@ namespace compinfo
             }
         }
 
-        public string GetCPU
+        public string CPU
         {
             get
             {
@@ -169,7 +169,7 @@ namespace compinfo
             }
         }
 
-        public string GetMemory
+        public string Memory
         {
             get
             {
@@ -204,7 +204,7 @@ namespace compinfo
             }
         }
 
-        public string GetGraphics
+        public string Graphics
         {
             get
             {
@@ -222,7 +222,7 @@ namespace compinfo
             }
         }
 
-        public string GetIPv4
+        public string IPv4
         {
             get
             {
@@ -258,11 +258,11 @@ namespace compinfo
             }
         }
 
-        public string GetUptime
+        public string Uptime
         {
             get
             {
-                return NativeMethods.GetUptime();
+                return NativeMethods.Uptime();
             }
         }
     }

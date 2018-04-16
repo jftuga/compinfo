@@ -11,7 +11,7 @@ namespace compinfo
         [System.Runtime.InteropServices.DllImport("kernel32")]
         extern static UInt64 GetTickCount64();
 
-        public static string GetUptime() {
+        public static string Uptime() {
             TimeSpan ts = TimeSpan.FromMilliseconds(GetTickCount64());
             return String.Format("{0}.{1:D2}:{2:D2}", ts.Days, ts.Hours, ts.Minutes);
             
