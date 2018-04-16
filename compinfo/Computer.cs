@@ -27,15 +27,13 @@ namespace compinfo
             {
                 using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
                 {
-                    return (rk == null) ? "" : (string)rk.GetValue(key);
+                    return (rk == null) ? NA : (string)rk.GetValue(key);
                 }
             }
             catch
             {
-                // do nothing
+                return NA;
             }
-
-            return "";
         }
 
         private static string addColons(string mac)
