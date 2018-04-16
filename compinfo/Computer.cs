@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using System.Linq;
 using System.Diagnostics;
+using System.Text;
+using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace compinfo 
 {
@@ -224,6 +227,7 @@ namespace compinfo
             }
         }
 
+        /*
         public string IPv4
         {
             get
@@ -259,6 +263,62 @@ namespace compinfo
                 return String.Join(", ", ip_list);
             }
         }
+        */
+
+        public ObservableCollection<NetworkAddressViewModel> IPv4
+        {
+            get
+            {
+                ObservableCollection<NetworkAddressViewModel> collection = new ObservableCollection<NetworkAddressViewModel>();
+                foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
+                {
+                    if (netInterface.OperationalStatus == OperationalStatus.Down)
+                    {
+                        continue;
+                    }
+                    if (netInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
+                        netInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet)
+                    {
+                        continue;
+                    }
+
+                    IPInterfaceProperties ipProps = netInterface.GetIPProperties();
+                    foreach (UnicastIPAddressInformation addr in ipProps.UnicastAddresses)
+                    {
+                        if (addr.Address.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork)
+                        {
+                            continue;
+                        }
+                        string ipAddress = addr.Address.ToString();
+                        string macAddress = netInterface.GetPhysicalAddress().ToString();
+                        collection.Add(new NetworkAddressViewModel(ipAddress, macAddress));
+                    }
+                }
+                return collection;
+            }
+        }
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            ObservableCollection<NetworkAddressViewModel> collection = value as ObservableCollection<NetworkAddressViewModel>;
+            if (collection == null)
+            {
+                return null;
+            }
+
+            StringBuilder result = new StringBuilder();
+            for (int x = 0; x < collection.Count; x++)
+            {
+                if (x > 0) { result.Append(", "); }
+                result.AppendFormat(
+                    "{0} [{1}]",
+                    collection[x].IpAddress,
+                    collection[x].MacAddress); // TODO: Use the MacAddressValueConverter here to format this value.
+            }
+
+            return result.ToString();
+        }
+
 
         public string Uptime
         {
