@@ -298,28 +298,6 @@ namespace compinfo
             }
         }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            ObservableCollection<NetworkAddressViewModel> collection = value as ObservableCollection<NetworkAddressViewModel>;
-            if (collection == null)
-            {
-                return null;
-            }
-
-            StringBuilder result = new StringBuilder();
-            for (int x = 0; x < collection.Count; x++)
-            {
-                if (x > 0) { result.Append(", "); }
-                result.AppendFormat(
-                    "{0} [{1}]",
-                    collection[x].IpAddress,
-                    collection[x].MacAddress); // TODO: Use the MacAddressValueConverter here to format this value.
-            }
-
-            return result.ToString();
-        }
-
-
         public string Uptime
         {
             get
