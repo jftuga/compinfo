@@ -27,7 +27,7 @@ namespace compinfo
                     culture,
                     "{0} [{1}]",
                     collection[x].IpAddress,
-                    macAddressValueConverter.Convert(collection[x].MacAddress, typeof(string), null, culture)); 
+                    macAddressValueConverter.Convert(collection[x].MacAddress, typeof(string), null, culture));
             }
 
             return result.ToString();

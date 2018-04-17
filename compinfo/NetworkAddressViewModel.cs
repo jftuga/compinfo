@@ -2,7 +2,7 @@
 
 namespace compinfo
 {
-    internal class NetworkAddressViewModel : INotifyPropertyChanged
+    internal sealed class NetworkAddressViewModel : INotifyPropertyChanged
     {
         private readonly string _ipAddress;
         private readonly string _macAddress;
