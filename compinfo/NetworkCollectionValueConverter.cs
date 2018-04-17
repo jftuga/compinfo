@@ -24,6 +24,7 @@ namespace compinfo
             {
                 if (x > 0) { result.Append(", "); }
                 result.AppendFormat(
+                    culture,
                     "{0} [{1}]",
                     collection[x].IpAddress,
                     macAddressValueConverter.Convert(collection[x].MacAddress, typeof(string), null, culture)); 

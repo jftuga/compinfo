@@ -61,11 +61,6 @@ namespace compinfo
             return NA;
         }
 
-        private static string addColons(string mac)
-        {
-            return (String.Format("{0}:{1}:{2}:{3}:{4}:{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2), mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2))).ToLower();
-        }
-
         private static string getPropertyValueFromManObject(ManagementObject obj, string propertyName, string noResult = "")
         {
             var prop = obj.Properties.Cast<PropertyData>().Where(x => x.Name == propertyName).FirstOrDefault();
