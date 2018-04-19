@@ -22,21 +22,6 @@ namespace compinfo
 
         // helper methods
 
-        private static string HKLM_GetString2(string path, string key)
-        {
-            try
-            {
-                using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
-                {
-                    return (rk == null) ? NA : (string)rk.GetValue(key);
-                }
-            }
-            catch
-            {
-                return NA;
-            }
-        }
-
         private static string HKLM_GetString(string path, string key)
         {
             RegistryKey registryKey = null;
@@ -221,44 +206,6 @@ namespace compinfo
                 return String.Join(", ", adapter_list);
             }
         }
-
-        /*
-        public string IPv4
-        {
-            get
-            {
-                List<string> ip_list = new List<string>();
-                String currentAddress = "";
-                foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
-                {
-                    if ((netInterface.NetworkInterfaceType.ToString() != "Wireless80211" && netInterface.NetworkInterfaceType.ToString() != "Ethernet") || netInterface.OperationalStatus.ToString() == "Down")
-                    {
-                        continue;
-                    }
-
-                    IPInterfaceProperties ipProps = netInterface.GetIPProperties();
-                    foreach (UnicastIPAddressInformation addr in ipProps.UnicastAddresses)
-                    {
-                        currentAddress = addr.Address.ToString();
-                        if (!currentAddress.Contains(":"))
-                        {
-                            if (currentAddress.StartsWith("169.254."))
-                            {
-                                continue;
-                            }
-
-                            if (!ip_list.Contains(currentAddress))
-                            {
-                                string macAddress = netInterface.GetPhysicalAddress().ToString();
-                                ip_list.Add(String.Format("{0} [{1}]", currentAddress, addColons(macAddress)));
-                            }
-                        }
-                    }
-                }
-                return String.Join(", ", ip_list);
-            }
-        }
-        */
 
         public ObservableCollection<NetworkAddressViewModel> IPv4
         {
