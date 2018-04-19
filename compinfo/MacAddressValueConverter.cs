@@ -29,7 +29,7 @@ namespace compinfo
 
         private static string addColons(string mac)
         {
-            return (12 == mac.Length) ? (String.Format("{0}:{1}:{2}:{3}:{4}:{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2), mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2))).ToLower() : String.Empty;
+            return (12 == mac.Length) ? (String.Format("{0}:{1}:{2}:{3}:{4}:{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2), mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2))).ToLower() : mac.ToLower();
             
         }
     }
