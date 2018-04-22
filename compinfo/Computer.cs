@@ -207,6 +207,28 @@ namespace compinfo
             }
         }
 
+        public string Disk
+        {
+            get
+            {
+                List<string> DeviceID = new List<string>();
+                List<string> FreeSpace = new List<string>();
+                List<string> Size = new List<string>();
+
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT DeviceID, FreeSpace, Size FROM Win32_LogicalDisk WHERE Description='Local Fixed Disk'"))
+                {
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        DeviceID.Add(getPropertyValueFromManObject(obj, "DeviceID"));
+                        FreeSpace.Add(getPropertyValueFromManObject(obj, "FreeSpace"));
+                        Size.Add(getPropertyValueFromManObject(obj, "Size"));
+                    }
+                }
+
+                return "";
+            }
+        }
+
         public ObservableCollection<NetworkAddressViewModel> IPv4
         {
             get

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:compinfo"
         xmlns:properties="clr-namespace:compinfo.Properties"
         mc:Ignorable="d"
-        Title="compinfo" Height="390" Width="750">
+        Title="compinfo" Height="420" Width="750">
 
     <Window.Resources>
         <local:NetworkCollectionValueConverter x:Key="NetworkCollectionValueConverter" />
@@ -35,6 +35,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
@@ -76,12 +77,15 @@
         <Label Label.Target="{Binding ElementName=TextBox_Graphics}"  Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Graphics}" />
         <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" Text="{Binding Path=Graphics, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.IPv4}" />
-        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_IPV4" Text="{Binding Path=IPv4, Mode=OneWay, Converter={StaticResource NetworkCollectionValueConverter}, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_FixedDisks}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.FixedDisks}" />
+        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_FixedDisks" Text="{Binding Path=FixedDisks, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.Uptime}" />
-        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_Uptime" Text="{Binding Path=Uptime, Mode=OneWay}" />
+        <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.IPv4}" />
+        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_IPV4" Text="{Binding Path=IPv4, Mode=OneWay, Converter={StaticResource NetworkCollectionValueConverter}, IsAsync=true}" />
 
-        <Button  Grid.Column="1" Grid.Row="11" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
+        <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="11" Content="{x:Static properties:Resources.Uptime}" />
+        <TextBox Grid.Column="1" Grid.Row="11" x:Name="TextBox_Uptime" Text="{Binding Path=Uptime, Mode=OneWay}" />
+
+        <Button  Grid.Column="1" Grid.Row="12" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
 </Window>

@@ -153,4 +153,7 @@
   <data name="Close" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="FixedDisks" xml:space="preserve">
+    <value>Fixed Disks</value>
+  </data>
 </root>
