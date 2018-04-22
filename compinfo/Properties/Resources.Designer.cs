@@ -90,9 +90,9 @@ namespace compinfo.Properties {
         /// <summary>
         ///   Looks up a localized string similar to Fixed Disks.
         /// </summary>
-        public static string FixedDisks {
+        public static string FixedDisk {
             get {
-                return ResourceManager.GetString("FixedDisks", resourceCulture);
+                return ResourceManager.GetString("FixedDisk", resourceCulture);
             }
         }
         

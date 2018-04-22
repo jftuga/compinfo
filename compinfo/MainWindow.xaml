@@ -10,6 +10,7 @@
 
     <Window.Resources>
         <local:NetworkCollectionValueConverter x:Key="NetworkCollectionValueConverter" />
+        <local:FixedDiskValueConverter x:Key="FixedDiskValueConverter" />
     </Window.Resources>
 
     <Grid Name="CompInfoGrid" FocusManager.FocusedElement="{Binding ElementName=Button_Close}">
@@ -77,8 +78,8 @@
         <Label Label.Target="{Binding ElementName=TextBox_Graphics}"  Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Graphics}" />
         <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" Text="{Binding Path=Graphics, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_FixedDisks}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.FixedDisks}" />
-        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_FixedDisks" Text="{Binding Path=FixedDisks, Mode=OneWay, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_FixedDisk}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.FixedDisk}" />
+        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_FixedDisk" Text="{Binding Path=FixedDisk, Mode=OneWay, Converter={StaticResource FixedDiskValueConverter}, IsAsync=true}" />
 
         <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.IPv4}" />
         <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_IPV4" Text="{Binding Path=IPv4, Mode=OneWay, Converter={StaticResource NetworkCollectionValueConverter}, IsAsync=true}" />

@@ -207,25 +207,26 @@ namespace compinfo
             }
         }
 
-        public string Disk
+        public ObservableCollection<FixedDiskViewModel> FixedDisk
         {
             get
             {
-                List<string> DeviceID = new List<string>();
-                List<string> FreeSpace = new List<string>();
-                List<string> Size = new List<string>();
-
+                string DeviceID = string.Empty;
+                UInt64 FreeSpace = 0;
+                UInt64 Size = 0;
+                ObservableCollection<FixedDiskViewModel> collection = new ObservableCollection<FixedDiskViewModel>();
                 using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT DeviceID, FreeSpace, Size FROM Win32_LogicalDisk WHERE Description='Local Fixed Disk'"))
                 {
                     foreach (ManagementObject obj in searcher.Get())
                     {
-                        DeviceID.Add(getPropertyValueFromManObject(obj, "DeviceID"));
-                        FreeSpace.Add(getPropertyValueFromManObject(obj, "FreeSpace"));
-                        Size.Add(getPropertyValueFromManObject(obj, "Size"));
+                        DeviceID = getPropertyValueFromManObject(obj, "DeviceID");
+                        FreeSpace = Convert.ToUInt64(getPropertyValueFromManObject(obj, "FreeSpace"));
+                        Size = Convert.ToUInt64(getPropertyValueFromManObject(obj, "Size"));
+                        collection.Add(new FixedDiskViewModel(DeviceID, FreeSpace, Size));
                     }
                 }
 
-                return "";
+                return collection;
             }
         }
 

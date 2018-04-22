@@ -67,6 +67,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DiskSizeValueConverter.cs" />
+    <Compile Include="FixedDiskCollectionValueConverter.cs" />
+    <Compile Include="FixedDiskViewModel.cs" />
     <Compile Include="MacAddressValueConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
