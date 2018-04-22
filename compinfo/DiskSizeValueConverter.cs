@@ -5,22 +5,23 @@ using System.Windows.Data;
 
 namespace compinfo
 {
-    [ValueConversion(typeof(UInt64), typeof(UInt64))]
+    [ValueConversion(typeof(ulong), typeof(string))] // The incoming type is UInt64, the return type is String.
     internal sealed class DiskSizeValueConverter : IValueConverter
     {
-        // 1 mb = 1048576   1 gb = 1073741824   1 tb = 1099511627776
-        private static readonly UInt64 mb_size = 1048576;
-        private static readonly UInt64 gb_size = mb_size * 1024;
-        private static readonly UInt64 tb_size = gb_size * 1024;
+        private const ulong BytesInMegabyte = 1048576UL; // 1 MB = 1048576 bytes
+        private const ulong BytesInGigabyte = 1048576UL * 1024UL; // 1 GB = 1073741824 bytes
+        private const ulong BytesInTerabyte = 1048576UL * 1024UL * 1024UL; // 1 TB = 1099511627776 bytes
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            // Perform sanity checks.  This class assumes the incoming 
             Debug.Assert(targetType == typeof(string));
             Debug.Assert(parameter == null);
             Debug.Assert(culture != null);
 
-            UInt64 rawValue = System.Convert.ToUInt64(value);
-            return changeUnits(rawValue);
+            // Perform conversion.
+            ulong rawValue = System.Convert.ToUInt64(value);
+            return FormatAsHumanReadableString(rawValue, culture);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -28,25 +29,24 @@ namespace compinfo
             throw new NotSupportedException();
         }
 
-        private static string changeUnits(UInt64 size)
+        private static string FormatAsHumanReadableString(ulong byteCount, CultureInfo culture)
         {
-            if (size >= tb_size)
+            if (byteCount >= BytesInTerabyte)
             {
-                return String.Format("{0:0.0#} tb", (size/tb_size));
-            }
-            else if (size >= gb_size)
-            { 
-                return String.Format("{0:0.0#} gb", (size/gb_size));
-            }
-            else if (size >= mb_size)
-            {
-                return String.Format("{0:0.0#} mb", (size / mb_size));
-            }
-            else
-            {
-                return size.ToString();
+                return string.Format(culture, "{0:0.0#} TB", (byteCount / BytesInTerabyte));
             }
 
+            if (byteCount >= BytesInGigabyte)
+            {
+                return string.Format(culture, "{0:0.0#} GB", (byteCount / BytesInGigabyte));
+            }
+
+            if (byteCount >= BytesInMegabyte)
+            {
+                return string.Format(culture, "{0:0.0#} MB", (byteCount / BytesInMegabyte));
+            }
+
+            return string.Format(culture, "{0} bytes", byteCount);
         }
     }
 }

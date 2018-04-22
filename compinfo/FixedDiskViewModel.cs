@@ -17,9 +17,10 @@ namespace compinfo
         }
 
         // is this the proper place to convert from int to string, or should I use an additional ValueConverter class?
+        // dj: the device id is already string - so what conversion are you refering to?
         public string DeviceID
         {
-            get { return this._deviceID.ToString(); }
+            get { return this._deviceID; }
         }
 
         public UInt64 FreeSpace

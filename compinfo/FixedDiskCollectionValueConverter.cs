@@ -27,8 +27,8 @@ namespace compinfo
                     culture,
                     "{0} [{1} of {2}]",
                     collection[x].DeviceID,
-                    diskSizeValueConverter.Convert(collection[x].FreeSpace, typeof(UInt64), null, culture),
-                    diskSizeValueConverter.Convert(collection[x].Size, typeof(UInt64), null, culture));
+                    diskSizeValueConverter.Convert(collection[x].FreeSpace, typeof(string), null, culture),
+                    diskSizeValueConverter.Convert(collection[x].Size, typeof(string), null, culture));
             }
 
             return result.ToString();
