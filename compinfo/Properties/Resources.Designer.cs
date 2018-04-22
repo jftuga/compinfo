@@ -88,7 +88,7 @@ namespace compinfo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fixed Disks.
+        ///   Looks up a localized string similar to Fixed Disks [Free / Total].
         /// </summary>
         public static string FixedDisk {
             get {

@@ -25,7 +25,7 @@ namespace compinfo
                 if (x > 0) { result.Append(", "); }
                 result.AppendFormat(
                     culture,
-                    "{0} [{1} of {2}]",
+                    "{0} [{1} / {2}]",
                     collection[x].DeviceID,
                     diskSizeValueConverter.Convert(collection[x].FreeSpace, typeof(string), null, culture),
                     diskSizeValueConverter.Convert(collection[x].Size, typeof(string), null, culture));

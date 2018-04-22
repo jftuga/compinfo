@@ -154,6 +154,6 @@
     <value>Close</value>
   </data>
   <data name="FixedDisk" xml:space="preserve">
-    <value>Fixed Disks</value>
+    <value>Fixed Disks [Free / Total]</value>
   </data>
 </root>
