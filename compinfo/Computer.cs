@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using Microsoft.Win32;
 using System.Linq;
 using System.Diagnostics;
+using System.Text;
+using System.Globalization;
+using System.Collections.ObjectModel;
 
 namespace compinfo 
 {
@@ -18,21 +21,6 @@ namespace compinfo
         }
 
         // helper methods
-
-        private static string HKLM_GetString2(string path, string key)
-        {
-            try
-            {
-                using (RegistryKey rk = Registry.LocalMachine.OpenSubKey(path))
-                {
-                    return (rk == null) ? NA : (string)rk.GetValue(key);
-                }
-            }
-            catch
-            {
-                return NA;
-            }
-        }
 
         private static string HKLM_GetString(string path, string key)
         {
@@ -56,11 +44,6 @@ namespace compinfo
             }
 
             return NA;
-        }
-
-        private static string addColons(string mac)
-        {
-            return (String.Format("{0}:{1}:{2}:{3}:{4}:{5}", mac.Substring(0, 2), mac.Substring(2, 2), mac.Substring(4, 2), mac.Substring(6, 2), mac.Substring(8, 2), mac.Substring(10, 2))).ToLower();
         }
 
         private static string getPropertyValueFromManObject(ManagementObject obj, string propertyName, string noResult = "")
@@ -224,15 +207,42 @@ namespace compinfo
             }
         }
 
-        public string IPv4
+        public ObservableCollection<FixedDiskViewModel> FixedDisk
         {
             get
             {
-                List<string> ip_list = new List<string>();
-                String currentAddress = "";
+                string DeviceID = string.Empty;
+                UInt64 FreeSpace = 0;
+                UInt64 Size = 0;
+                ObservableCollection<FixedDiskViewModel> collection = new ObservableCollection<FixedDiskViewModel>();
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT DeviceID, FreeSpace, Size FROM Win32_LogicalDisk WHERE Description='Local Fixed Disk'"))
+                {
+                    foreach (ManagementObject obj in searcher.Get())
+                    {
+                        DeviceID = getPropertyValueFromManObject(obj, "DeviceID");
+                        FreeSpace = Convert.ToUInt64(getPropertyValueFromManObject(obj, "FreeSpace"));
+                        Size = Convert.ToUInt64(getPropertyValueFromManObject(obj, "Size"));
+                        collection.Add(new FixedDiskViewModel(DeviceID, FreeSpace, Size));
+                    }
+                }
+
+                return collection;
+            }
+        }
+
+        public ObservableCollection<NetworkAddressViewModel> IPv4
+        {
+            get
+            {
+                ObservableCollection<NetworkAddressViewModel> collection = new ObservableCollection<NetworkAddressViewModel>();
                 foreach (NetworkInterface netInterface in NetworkInterface.GetAllNetworkInterfaces())
                 {
-                    if ((netInterface.NetworkInterfaceType.ToString() != "Wireless80211" && netInterface.NetworkInterfaceType.ToString() != "Ethernet") || netInterface.OperationalStatus.ToString() == "Down")
+                    if (netInterface.OperationalStatus == OperationalStatus.Down)
+                    {
+                        continue;
+                    }
+                    if (netInterface.NetworkInterfaceType != NetworkInterfaceType.Wireless80211 &&
+                        netInterface.NetworkInterfaceType != NetworkInterfaceType.Ethernet)
                     {
                         continue;
                     }
@@ -240,23 +250,16 @@ namespace compinfo
                     IPInterfaceProperties ipProps = netInterface.GetIPProperties();
                     foreach (UnicastIPAddressInformation addr in ipProps.UnicastAddresses)
                     {
-                        currentAddress = addr.Address.ToString();
-                        if (!currentAddress.Contains(":"))
+                        if (addr.Address.AddressFamily != System.Net.Sockets.AddressFamily.InterNetwork)
                         {
-                            if (currentAddress.StartsWith("169.254."))
-                            {
-                                continue;
-                            }
-
-                            if (!ip_list.Contains(currentAddress))
-                            {
-                                string macAddress = netInterface.GetPhysicalAddress().ToString();
-                                ip_list.Add(String.Format("{0} [{1}]", currentAddress, addColons(macAddress)));
-                            }
+                            continue;
                         }
+                        string ipAddress = addr.Address.ToString();
+                        string macAddress = netInterface.GetPhysicalAddress().ToString();
+                        collection.Add(new NetworkAddressViewModel(ipAddress, macAddress));
                     }
                 }
-                return String.Join(", ", ip_list);
+                return collection;
             }
         }
 

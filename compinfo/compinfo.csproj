@@ -67,6 +67,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DiskSizeValueConverter.cs" />
+    <Compile Include="FixedDiskCollectionValueConverter.cs" />
+    <Compile Include="FixedDiskViewModel.cs" />
+    <Compile Include="MacAddressValueConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -74,6 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="NetworkAddressViewModel.cs" />
+    <Compile Include="NetworkCollectionValueConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

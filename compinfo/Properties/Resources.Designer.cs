@@ -88,6 +88,15 @@ namespace compinfo.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fixed Disks [Free / Total].
+        /// </summary>
+        public static string FixedDisk {
+            get {
+                return ResourceManager.GetString("FixedDisk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphics.
         /// </summary>
         public static string Graphics {
