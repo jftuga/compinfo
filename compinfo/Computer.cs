@@ -162,6 +162,7 @@ namespace compinfo
                 string Speed = "";
                 long totalSize = 0;
                 long totalSizeGB = 0;
+                long modules = 0;
 
                 using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select Capacity, Speed from Win32_PhysicalMemory"))
                 {
@@ -169,6 +170,7 @@ namespace compinfo
                     {
                         Capacity = getPropertyValueFromManObject(obj, "Capacity");
                         totalSize += Convert.ToInt64(Capacity);
+                        modules += 1;
 
                         try
                         {
@@ -185,7 +187,7 @@ namespace compinfo
                 }
 
                 totalSizeGB = (totalSize) / 1073741824; // 1024**3 (1 GB)
-                return String.Format("{0:0.00} GB [{1}]", totalSizeGB, Speed);
+                return String.Format("{0:0.00} GB [{1}, {2} modules]", totalSizeGB, Speed, modules);
             }
         }
 
@@ -256,14 +258,15 @@ namespace compinfo
                         }
                         string ipAddress = addr.Address.ToString();
                         string macAddress = netInterface.GetPhysicalAddress().ToString();
-                        collection.Add(new NetworkAddressViewModel(ipAddress, macAddress));
+                        long speed = netInterface.Speed;
+                        collection.Add(new NetworkAddressViewModel(ipAddress, macAddress, speed));
                     }
                 }
                 return collection;
             }
         }
 
-        public string Uptime
+        public TimeSpan Uptime
         {
             get
             {

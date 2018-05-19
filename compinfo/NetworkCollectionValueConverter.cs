@@ -18,6 +18,7 @@ namespace compinfo
             }
 
             MacAddressValueConverter macAddressValueConverter = new MacAddressValueConverter();
+            NetworkInterfaceSpeedValueConverter networkInterfaceSpeedValueConverter = new NetworkInterfaceSpeedValueConverter();
 
             StringBuilder result = new StringBuilder();
             for (int x = 0; x < collection.Count; x++)
@@ -25,9 +26,10 @@ namespace compinfo
                 if (x > 0) { result.Append(", "); }
                 result.AppendFormat(
                     culture,
-                    "{0} [{1}]",
+                    "{0} [{1} @ {2}]",
                     collection[x].IpAddress,
-                    macAddressValueConverter.Convert(collection[x].MacAddress, typeof(string), null, culture));
+                    macAddressValueConverter.Convert(collection[x].MacAddress, typeof(string), null, culture),
+                    networkInterfaceSpeedValueConverter.Convert(collection[x].Speed, typeof(string), null, culture));
             }
 
             return result.ToString();

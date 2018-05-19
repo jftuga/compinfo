@@ -6,14 +6,15 @@
         xmlns:local="clr-namespace:compinfo"
         xmlns:properties="clr-namespace:compinfo.Properties"
         mc:Ignorable="d"
-        Title="compinfo" Height="420" Width="750">
+        Title="compinfo" Height="420" Width="Auto">
 
     <Window.Resources>
         <local:NetworkCollectionValueConverter x:Key="NetworkCollectionValueConverter" />
         <local:FixedDiskValueConverter x:Key="FixedDiskValueConverter" />
     </Window.Resources>
 
-    <Grid Name="CompInfoGrid" FocusManager.FocusedElement="{Binding ElementName=Button_Close}">
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid Name="CompInfoGrid" FocusManager.FocusedElement="{Binding ElementName=Button_Close}">
         <Grid.Resources>
             <Style TargetType="Border" >
                 <Setter Property="Padding" Value="5,5,5,5" />
@@ -85,8 +86,9 @@
         <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_IPV4" Text="{Binding Path=IPv4, Mode=OneWay, Converter={StaticResource NetworkCollectionValueConverter}, IsAsync=true}" />
 
         <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="11" Content="{x:Static properties:Resources.Uptime}" />
-        <TextBox Grid.Column="1" Grid.Row="11" x:Name="TextBox_Uptime" Text="{Binding Path=Uptime, Mode=OneWay}" />
+        <TextBox Grid.Column="1" Grid.Row="11" x:Name="TextBox_Uptime" Text="{Binding Path=Uptime, StringFormat=\{0\:dd\\.hh\\:mm\}, Mode=OneWay, IsAsync=False}" />
 
         <Button  Grid.Column="1" Grid.Row="12" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
+    </ScrollViewer>
 </Window>
