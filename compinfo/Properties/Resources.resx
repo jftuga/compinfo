@@ -156,4 +156,10 @@
   <data name="FixedDisk" xml:space="preserve">
     <value>Fixed Disks [Free / Total]</value>
   </data>
+  <data name="InstallDate" xml:space="preserve">
+    <value>Install Date</value>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
 </root>

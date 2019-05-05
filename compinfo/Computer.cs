@@ -17,7 +17,7 @@ namespace compinfo
 
         public Computer()
         {
-            NA = "N/A";
+            NA = compinfo.Properties.Resources.NA;
         }
 
         // helper methods
@@ -44,6 +44,30 @@ namespace compinfo
             }
 
             return NA;
+        }
+
+        private static int HKLM_GetDWord(string path, string key)
+        {
+            RegistryKey registryKey = null;
+            try
+            {
+                registryKey = Registry.LocalMachine.OpenSubKey(path, false);
+                if (registryKey == null)
+                {
+                    return 0;
+                }
+                if (registryKey.GetValueKind(key) != RegistryValueKind.DWord)
+                {
+                    return 0;
+                }
+                return (int) registryKey.GetValue(key);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+
+            return 0;
         }
 
         private static string getPropertyValueFromManObject(ManagementObject obj, string propertyName, string noResult = "")
@@ -90,6 +114,21 @@ namespace compinfo
             get
             {
                 return HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
+            }
+        }
+
+        public string InstallDate
+        {
+            get
+            {
+                int regVal = HKLM_GetDWord(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "InstallDate");
+                if (0 == regVal)
+                {
+                    return NA;
+                }
+                DateTime startDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                DateTime installDate = startDate.AddSeconds(regVal);
+                return installDate.ToString("yyyy-MM-dd hh:mm:ss tt");
             }
         }
 

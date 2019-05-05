@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:compinfo"
         xmlns:properties="clr-namespace:compinfo.Properties"
         mc:Ignorable="d"
-        Title="compinfo" Height="420" Width="Auto">
+        Title="compinfo" Height="445" Width="Auto">
 
     <Window.Resources>
         <local:NetworkCollectionValueConverter x:Key="NetworkCollectionValueConverter" />
@@ -49,6 +49,7 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
 
         <Border Grid.ColumnSpan="2" Grid.Row="0">
@@ -64,31 +65,34 @@
         <Label Label.Target="{Binding ElementName=TextBox_OS}"  Grid.Column="0" Grid.Row="3" Content="{x:Static properties:Resources.OS}" />
         <TextBox Grid.Column="1" Grid.Row="3" x:Name="TextBox_OS" Text="{Binding Path=OS, Mode=OneWay }" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Model}"  Grid.Column="0" Grid.Row="4" Content="{x:Static properties:Resources.Model}" />
-        <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_Model" Text="{Binding Path=Model, Mode=OneWay, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_InstallDate}"  Grid.Column="0" Grid.Row="4" Content="{x:Static properties:Resources.InstallDate}" />
+        <TextBox Grid.Column="1" Grid.Row="4" x:Name="TextBox_InstallDate" Text="{Binding Path=InstallDate, Mode=OneWay }" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Serial}"  Grid.Column="0" Grid.Row="5" Content="{x:Static properties:Resources.Serial}" />
-        <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Serial" Text="{Binding Path=Serial, Mode=OneWay}" />
+        <Label Label.Target="{Binding ElementName=TextBox_Model}"  Grid.Column="0" Grid.Row="5" Content="{x:Static properties:Resources.Model}" />
+        <TextBox Grid.Column="1" Grid.Row="5" x:Name="TextBox_Model" Text="{Binding Path=Model, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_CPU}"  Grid.Column="0" Grid.Row="6" Content="{x:Static properties:Resources.CPU}" />
-        <TextBox Grid.Column="1" Grid.Row="6" x:Name="TextBox_CPU" Text="{Binding Path=CPU, Mode=OneWay, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_Serial}"  Grid.Column="0" Grid.Row="6" Content="{x:Static properties:Resources.Serial}" />
+        <TextBox Grid.Column="1" Grid.Row="6" x:Name="TextBox_Serial" Text="{Binding Path=Serial, Mode=OneWay}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Memory}"  Grid.Column="0" Grid.Row="7" Content="{x:Static properties:Resources.Memory}" />
-        <TextBox Grid.Column="1" Grid.Row="7" x:Name="TextBox_Memory" Text="{Binding Path=Memory, Mode=OneWay, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_CPU}"  Grid.Column="0" Grid.Row="7" Content="{x:Static properties:Resources.CPU}" />
+        <TextBox Grid.Column="1" Grid.Row="7" x:Name="TextBox_CPU" Text="{Binding Path=CPU, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Graphics}"  Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Graphics}" />
-        <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Graphics" Text="{Binding Path=Graphics, Mode=OneWay, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_Memory}"  Grid.Column="0" Grid.Row="8" Content="{x:Static properties:Resources.Memory}" />
+        <TextBox Grid.Column="1" Grid.Row="8" x:Name="TextBox_Memory" Text="{Binding Path=Memory, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_FixedDisk}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.FixedDisk}" />
-        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_FixedDisk" Text="{Binding Path=FixedDisk, Mode=OneWay, Converter={StaticResource FixedDiskValueConverter}, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_Graphics}"  Grid.Column="0" Grid.Row="9" Content="{x:Static properties:Resources.Graphics}" />
+        <TextBox Grid.Column="1" Grid.Row="9" x:Name="TextBox_Graphics" Text="{Binding Path=Graphics, Mode=OneWay, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.IPv4}" />
-        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_IPV4" Text="{Binding Path=IPv4, Mode=OneWay, Converter={StaticResource NetworkCollectionValueConverter}, IsAsync=true}" />
+        <Label Label.Target="{Binding ElementName=TextBox_FixedDisk}"  Grid.Column="0" Grid.Row="10" Content="{x:Static properties:Resources.FixedDisk}" />
+        <TextBox Grid.Column="1" Grid.Row="10" x:Name="TextBox_FixedDisk" Text="{Binding Path=FixedDisk, Mode=OneWay, Converter={StaticResource FixedDiskValueConverter}, IsAsync=true}" />
 
-        <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="11" Content="{x:Static properties:Resources.Uptime}" />
-        <TextBox Grid.Column="1" Grid.Row="11" x:Name="TextBox_Uptime" Text="{Binding Path=Uptime, StringFormat=\{0\:dd\\.hh\\:mm\}, Mode=OneWay, IsAsync=False}" />
+        <Label Label.Target="{Binding ElementName=TextBox_IPV4}"  Grid.Column="0" Grid.Row="11" Content="{x:Static properties:Resources.IPv4}" />
+        <TextBox Grid.Column="1" Grid.Row="11" x:Name="TextBox_IPV4" Text="{Binding Path=IPv4, Mode=OneWay, Converter={StaticResource NetworkCollectionValueConverter}, IsAsync=true}" />
 
-        <Button  Grid.Column="1" Grid.Row="12" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
+        <Label Label.Target="{Binding ElementName=TextBox_Uptime}"  Grid.Column="0" Grid.Row="12" Content="{x:Static properties:Resources.Uptime}" />
+        <TextBox Grid.Column="1" Grid.Row="12" x:Name="TextBox_Uptime" Text="{Binding Path=Uptime, StringFormat=\{0\:dd\\.hh\\:mm\}, Mode=OneWay, IsAsync=False}" />
+
+        <Button  Grid.Column="1" Grid.Row="13" x:Name="Button_Close" Content="{x:Static properties:Resources.Close}"  HorizontalAlignment="Right" Click="Click_Close" Margin="20,4,20,0" />
     </Grid>
     </ScrollViewer>
 </Window>
