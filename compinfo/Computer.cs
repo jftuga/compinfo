@@ -46,30 +46,6 @@ namespace compinfo
             return NA;
         }
 
-        private static int HKLM_GetDWord(string path, string key)
-        {
-            RegistryKey registryKey = null;
-            try
-            {
-                registryKey = Registry.LocalMachine.OpenSubKey(path, false);
-                if (registryKey == null)
-                {
-                    return 0;
-                }
-                if (registryKey.GetValueKind(key) != RegistryValueKind.DWord)
-                {
-                    return 0;
-                }
-                return (int) registryKey.GetValue(key);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-
-            return 0;
-        }
-
         private static string getPropertyValueFromManObject(ManagementObject obj, string propertyName, string noResult = "")
         {
             var prop = obj.Properties.Cast<PropertyData>().Where(x => x.Name == propertyName).FirstOrDefault();
@@ -121,17 +97,14 @@ namespace compinfo
         {
             get
             {
-                int regVal = HKLM_GetDWord(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "InstallDate");
-                if (0 == regVal)
+                using (ManagementObjectSearcher searcher = new ManagementObjectSearcher("select InstallDate from Win32_OperatingSystem"))
                 {
-                    return NA;
+                    string InsDate = getPropertyValueFromSearcher(searcher, "InstallDate");
+
+                    return (InsDate.Length <= 7) ? NA : String.Format("{0}-{1}-{2}", InsDate.Substring(0, 4), InsDate.Substring(4, 2), InsDate.Substring(6, 2));
                 }
-                DateTime startDate = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                DateTime installDate = startDate.AddSeconds(regVal);
-                return installDate.ToString("yyyy-MM-dd hh:mm:ss tt");
             }
         }
-
         public string Model
         {
             get
