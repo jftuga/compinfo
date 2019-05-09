@@ -157,7 +157,7 @@
     <value>Fixed Disks [Free / Total]</value>
   </data>
   <data name="InstallDate" xml:space="preserve">
-    <value>Install Date</value>
+    <value>Install Date [Y-M-D]</value>
   </data>
   <data name="NA" xml:space="preserve">
     <value>N/A</value>
