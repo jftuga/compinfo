@@ -106,7 +106,7 @@ namespace compinfo.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Install Date.
+        ///   Looks up a localized string similar to Install Date [Y-M-D].
         /// </summary>
         public static string InstallDate {
             get {
