@@ -89,7 +89,9 @@ namespace compinfo
         {
             get
             {
-                return HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
+                string ProductName = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName");
+                string ReleaseId = HKLM_GetString(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId");
+                return String.Format("{0} [{1}]", ProductName, ReleaseId);
             }
         }
 

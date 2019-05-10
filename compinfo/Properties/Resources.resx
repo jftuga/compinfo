@@ -136,7 +136,7 @@
     <value>Model</value>
   </data>
   <data name="OS" xml:space="preserve">
-    <value>Operating System</value>
+    <value>Operating System [Release]</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial [BIOS]</value>
