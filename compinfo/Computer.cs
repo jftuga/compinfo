@@ -54,7 +54,12 @@ namespace compinfo
                 return NA;
             }
 
-            string propStr = prop.Value.ToString().Trim();
+            string propStr = "";
+            if (prop.Value != null)
+            {
+                propStr = prop.Value.ToString().Trim();
+            }
+
             return (propStr.Length > 0) ? propStr : noResult;
         }
 
